@@ -9,10 +9,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+
 
 class UserController extends Controller
 {
     private $status_code = 200;
+    
     public function store(Request $request)
     {
         
@@ -47,6 +50,7 @@ class UserController extends Controller
         ]);
         
         if(!is_null($user)) {
+            event(new Registered($user));
             return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);
         }
 

@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->integer('phone')->unique()->nullable();
 
-            $table->timestamps();
+            $table->timestamps('email_verified_at');
         });
     }
 
