@@ -55,38 +55,13 @@ class UserController extends Controller
         }
     }
         
-        /* ->all())->validate();
-        $user=$this->create($request->all());
-        $this->guard()->login($user);
-        return response()->json([
-            'user'=>$user,
-            'message'=>'registration successful'
-        ], 200); */
-        
-    /* protected function validator(array $request)
-    {
-         Validator::make($request, [
-            
-        ]);
-        
-    }
-    protected function create(array $request){
-        //$path = $request->file('profile')->store('profile');
-        return User::create([
-            'name' => $request['name'],
-            'username' => $request['username'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-            'phone' => $request['phone']
-        ]);} */
+     
     protected function guard(){
         Auth::guard();
     }
     public function login(Request $request){
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)){
-            $authuser = auth()->user();
+        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']], $request['remember'])){
+            $user = Auth::user();
             return response()->json(['message' => 'Login successful'], 200);
         }else{
             return response()->json(['message' => 'Invalid email or password'], 401);
