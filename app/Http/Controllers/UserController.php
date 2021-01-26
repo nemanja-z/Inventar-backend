@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 
 
-
 class UserController extends Controller
 {
     private $status_code = 200;
@@ -49,9 +48,9 @@ class UserController extends Controller
             'phone' => $request['phone'],
             'profile' => $path
         ]);
-        
+        $user->sendEmailVerificationNotification();
+
         if(!is_null($user)) {
-            event(new Registered($user));
             return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);
         }
 
@@ -67,8 +66,11 @@ class UserController extends Controller
     public function login(Request $request){
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']], $request['remember'])){
             $user = Auth::user();
-            return response()->json(['message' => 'Login successful'], 200);
-        }else{
+            if($user->email_verified_at !== NULL){
+                return response()->json(['message' => 'Login successful'], 200);
+            }else{
+                return response()->json(['message'=> 'Please Verify Email'], 401);}}
+        else{
             return response()->json(['message' => 'Invalid email or password'], 401);
         }
     }
