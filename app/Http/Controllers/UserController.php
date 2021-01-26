@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 
 
+
 class UserController extends Controller
 {
     private $status_code = 200;
