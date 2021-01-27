@@ -24,7 +24,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:5'],
             'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'phone' => ['integer']
+            'phone' => ['integer'],
+            'password_confirmation' => 'required|same:password|min:5'
         ]);
         if($validator->fails()) {
             return response()->json(["status" => "failed", "message" => "validation_error", "errors" => $validator->errors()]);
