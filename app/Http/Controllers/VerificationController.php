@@ -6,6 +6,10 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
+
 
 
 class VerificationController extends VerifyEmail
@@ -53,33 +57,32 @@ class VerificationController extends VerifyEmail
         $status = Password::sendResetLink($input);
     
         return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
-        /*$response =  Password::sendResetLink($input);
-         if($response == Password::RESET_LINK_SENT){
-            $message = "Mail send successfully";
-        }else{
-            $message = "Email could not be sent to this email address";
-        } 
-        $response = ['data'=>'','message' => $message];
-        return response($response, 200);*/
+                 ? response()->json(['message' => 'Reset link has been sent to your email!', 'success'=>true, 'status' => __($status)])
+                 : response()->json(['message' => 'Reset link couldn\'t be sent!', 'success'=>false, 'status' => __($status)]);
     }
 
     public function passwordReset(Request $request){
-        $input = $request->only('email','token', 'password', 'password_confirmation');
-        $validator = Validator::make($input, [
+        $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|min:5|confirmed',
         ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-        $response = Password::reset($input, function ($user, $password) {
-            $user->password = Hash::make($password);
-            $user->save();
-        });
-        $message = $response == Password::PASSWORD_RESET ? 'Password reset successfully' : GLOBAL_SOMETHING_WANTS_TO_WRONG;
-        return response()->json($message);
+    
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->save();
+    
+                $user->setRememberToken(Str::random(60));
+    
+                event(new PasswordReset($user));
+            }
+        );
+    
+        return $status == Password::PASSWORD_RESET 
+            ? response()->json(['message' => 'Your password is changed!','success'=>true, 'status' => __($status)])
+            : response()->json(['message' => 'Your password isn\'t changed!', 'success'=>false, 'status' => __($status)]);
     }
 }
