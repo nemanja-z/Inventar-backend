@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\Events\Registered;
 use App\Notifications\VerifyUserEmail;
+use App\Notifications\MailResetPasswordToken;
+
 
 class User extends Authenticatable
 {
@@ -33,5 +35,10 @@ class User extends Authenticatable
     public function sendEmailVerificationNotification()
         {
             $this->notify(new VerifyUserEmail);
+        }
+
+    public function sendPasswordResetNotification($token)
+        {
+            $this->notify(new MailResetPasswordToken($token));
         }
 }

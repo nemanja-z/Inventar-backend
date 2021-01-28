@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
             $table->rememberToken();
-            $table->integer('phone')->unique()->nullable();
+            $table->char('phone', 15)->unique()->nullable();
             $table->timestamps();
             $table->timestamp('email_verified_at')->nullable();
         });

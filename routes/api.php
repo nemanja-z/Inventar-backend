@@ -22,11 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::get('email/resend', [VerificationApiController::class, 'resend'])->name('verification.resend');
+Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);
 Route::get('/logout', [UserController::class, 'logout']);
-Route::post('/forgot-password', function (Request $request) {
+Route::post('/forgot-password', [VerificationController::class, 'forgotPassword'])->name('password.email');
+/* Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
 
     $status = Password::sendResetLink(
@@ -36,9 +37,9 @@ Route::post('/forgot-password', function (Request $request) {
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
-})->name('password.email');
+})->name('password.email');*/
 Route::get('/reset-password/{token}', function ($token) {
-})->name('password.reset');
+})->name('password.reset'); 
 Route::post('/reset-password', function (Request $request) {
     $request->validate([
         'token' => 'required',
