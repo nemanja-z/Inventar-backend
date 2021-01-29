@@ -53,10 +53,8 @@ class UserController extends Controller
 
         if(!is_null($user)) {
             return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);
-        }
-
-        else {
-            return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
+        }else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Failed to register"]);
         }
     }
         

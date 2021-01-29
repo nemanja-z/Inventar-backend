@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+    protected $guarded = [];
     public function employes(){
-        return $this->hasMany(User::class)
+        return $this->hasMany(User::class);
     }
 }

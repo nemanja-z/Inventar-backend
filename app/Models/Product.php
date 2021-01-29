@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    
     public function storage(){
         return $this->hasMany(Warehouse::class);
     }
