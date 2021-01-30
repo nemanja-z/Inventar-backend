@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
@@ -25,7 +26,8 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:5'],
             'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'phone' => ['integer'],
-            'password_confirmation' => 'required|same:password|min:5'
+            'password_confirmation' => 'required|same:password|min:5',
+            'company_name' => ['required', 'string']
         ]);
         if($validator->fails()) {
             return response()->json(["status" => "failed", "message" => "validation_error", "errors" => $validator->errors()]);
@@ -38,9 +40,13 @@ class UserController extends Controller
             $path = $destinationPath . '/' . $profile_name;
         }
         $user_status = User::where("email", $request->email)->first();
-
+        $company_status = Company::where("company_name", $request->company_name)->first();
+        
         if(!is_null($user_status)) {
-            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! email already registered"]);
+            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! Email already registered!"]);
+         }
+         if(!is_null($company_status)) {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! Copmany name is not available!"]);
          }
         $user = User::create([
             'name' => $request['name'],
@@ -49,13 +55,16 @@ class UserController extends Controller
             'phone' => $request['phone'],
             'profile' => $path
         ]);
+        $company = Company::create([
+            'company_name' => $request['company_name']
+        ]);
         $user->sendEmailVerificationNotification();
 
-        if(!is_null($user)) {
+        if(!(is_null($user) && is_null($company))) {
             return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);
-        }else {
-            return response()->json(["status" => "failed", "success" => false, "message" => "Failed to register"]);
         }
+        
+        return response()->json(["status" => "failed", "success" => false, "message" => "Failed to register"]);
     }
         
      

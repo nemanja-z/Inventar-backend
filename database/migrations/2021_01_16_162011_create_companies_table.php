@@ -15,12 +15,17 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('company_name')->unique();
             $table->string('headquarter')->nullable();
             $table->integer('founded')->nullable();
             $table->string('owner')->nullable();
             $table->string('website')->nullable();
             $table->string('logo')->nullable();
+            $table->foreignId('user_id')
+                    ->nullable()
+                    ->constrained()
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

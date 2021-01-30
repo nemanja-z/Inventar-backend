@@ -40,10 +40,10 @@ class ProjectController extends Controller
         if(!is_null($company))
         {
             return response()->json(['status'=>$this->status_code, 'succes'=>true, 'message'=>'Company profile is created!', 'data'=>$company]);
-        }else{
-            return response()->json(['status'=>'failed', 'succes'=>false,
-            'message'=>'Failed to create company profile']);
         }
+        return response()->json(['status'=>'failed', 'succes'=>false,
+            'message'=>'Failed to create company profile']);
+        
     }
 
     public function delete(Request $request, $mode)
