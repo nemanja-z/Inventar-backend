@@ -36,7 +36,8 @@ class ProjectController extends Controller
             'founded'=> $request['founded'],
             'owner'=> $request['owner'],
             'website'=> $request['website'],
-            'logo'=>$path]);
+            'logo'=>$path,
+            'user_id'=>$user->id]);
         if(!is_null($company))
         {
             return response()->json(['status'=>$this->status_code, 'succes'=>true, 'message'=>'Company profile is created!', 'data'=>$company]);

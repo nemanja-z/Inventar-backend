@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->string('distributor')->nullable();
             $table->string('manufacturer')->nullable();
             $table->foreignId('order_id')
+                    ->nullable()
                     ->constrained()
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
