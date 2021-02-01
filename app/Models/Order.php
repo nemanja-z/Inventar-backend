@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $guarder = [];
+
+    
     public function products(){
         return $this->hasMany(Product::class);
     }
