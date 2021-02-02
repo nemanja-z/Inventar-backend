@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Password;
@@ -34,4 +35,5 @@ Route::post('/reset-password', [VerificationController::class, 'passwordReset'])
 Route::post('/product', [ProductController::class, 'store']);
 Route::post('/customer', [CustomerController::class, 'store']);
 Route::post('/warehouse', [WarehouseController::class, 'store']);
+Route::post('/worker', [WorkerController::class, 'store']);
 
