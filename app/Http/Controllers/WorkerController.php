@@ -24,7 +24,8 @@ class WorkerController extends Controller
             'name'=> $request['name'],
             'email'=>$request['email']
             ]);
-
+        $company = Company::where('name', $request['company_name']);
+        $company->worker()->save($worker);
         if(!is_null($worker))
         {
             return response()->json(['status'=>$this->status_code, 'succes'=>true, 'message'=>'Worker record is created!', 'data'=>$worker]);

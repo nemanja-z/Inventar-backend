@@ -27,7 +27,8 @@ class CustomerController extends Controller
             'phone'=> $request['phone'],
             'discount'=> $request['discount']
             ]);
-
+        $company = Company::where('name', $request['company_name']);
+        $company->customer()->save($customer);
         if(!is_null($customer))
         {
             return response()->json(['status'=>$this->status_code, 'succes'=>true, 'message'=>'Customer account is created!', 'data'=>$customer]);

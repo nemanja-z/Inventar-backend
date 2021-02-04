@@ -41,4 +41,7 @@ class User extends Authenticatable
         {
             $this->notify(new MailResetPasswordToken($token));
         }
+    public function company(){
+        return $this->hasOne(Company::class);
+    }
 }

@@ -19,6 +19,11 @@ class CreateCustomersTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone');
             $table->integer('discount')->nullable();
+            $table->foreignId('user_id')
+                    ->nullable()
+                    ->constrained()
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

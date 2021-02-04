@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Company;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -44,7 +45,8 @@ class ProductController extends Controller
             'manufacturer' => $request['manufacturer'],
             'picture'=>$path??null
             ]);
-
+        $company = Company::where('company_name', $request['company_name'])->firstOrFail();
+        $company->product()->save($product);
         if(!is_null($product))
         {
             return response()->json(['status'=>$this->status_code, 'succes'=>true, 'message'=>'Product is created!', 'data'=>$product]);

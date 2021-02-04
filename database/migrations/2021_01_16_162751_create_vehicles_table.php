@@ -17,6 +17,11 @@ class CreateVehiclesTable extends Migration
             $table->id();
             $table->date('registration_expiration_date')->nullable();
             $table->string('current_location')->nullable();
+            $table->foreignId('user_id')
+                    ->nullable()
+                    ->constrained()
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

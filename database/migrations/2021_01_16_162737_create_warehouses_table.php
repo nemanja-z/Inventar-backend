@@ -21,6 +21,11 @@ class CreateWarehousesTable extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained()
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 
