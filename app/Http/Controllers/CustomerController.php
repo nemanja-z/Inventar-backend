@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Company;
+
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -27,7 +29,7 @@ class CustomerController extends Controller
             'phone'=> $request['phone'],
             'discount'=> $request['discount']
             ]);
-        $company = Company::where('name', $request['company_name']);
+        $company = Company::where('company_name', $request['company_name'])->firstOrFail();
         $company->customer()->save($customer);
         if(!is_null($customer))
         {

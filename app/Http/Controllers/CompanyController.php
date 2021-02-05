@@ -53,7 +53,6 @@ class CompanyController extends Controller
     public function view(Request $request)
     {
         $id = Auth::id();
-        $company=Company::where('user_id', $id)->firstOrFail();
-        return $company::with('user')->get();
+        return Company::with(['user', 'product', 'worker', 'warehouse', 'customer'])->where('user_id', $id)->firstOrFail();
     }
 }

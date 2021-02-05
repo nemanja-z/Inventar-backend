@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Worker;
+use Illuminate\Support\Facades\Validator;
+
 
 class WorkerController extends Controller
 {
@@ -24,7 +27,7 @@ class WorkerController extends Controller
             'name'=> $request['name'],
             'email'=>$request['email']
             ]);
-        $company = Company::where('name', $request['company_name']);
+        $company = Company::where('company_name', $request['company_name'])->firstOrFail();
         $company->worker()->save($worker);
         if(!is_null($worker))
         {

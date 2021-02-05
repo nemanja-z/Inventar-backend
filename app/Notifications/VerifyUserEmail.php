@@ -19,4 +19,4 @@ protected function verificationUrl($notifiable)
     'verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]
     ); 
 }
-}
+} 

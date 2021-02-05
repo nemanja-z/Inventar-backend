@@ -18,6 +18,7 @@ class CreateWarehousesTable extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->foreignId('product_id')
+                  ->nullable()
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
@@ -26,6 +27,12 @@ class CreateWarehousesTable extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->foreignId('company_id')
+                  ->nullable()
+                  ->constrained()
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

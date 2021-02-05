@@ -18,10 +18,17 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->timestamps();
             $table->foreignId('shipment_id')
+                  ->nullable()
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->foreignId('customer_id')
+                  ->nullable()
+                  ->constrained()
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->foreignId('company_id')
+                  ->nullable()
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');

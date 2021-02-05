@@ -24,4 +24,7 @@ class Company extends Model
     public function worker(){
         return $this->hasMany(Worker::class);
     }
+    public function order(){
+        return $this->hasMany(Order::class);
+    }
 }

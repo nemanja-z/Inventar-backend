@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $guarder = [];
+    protected $guarded = [];
 
     
     public function products(){

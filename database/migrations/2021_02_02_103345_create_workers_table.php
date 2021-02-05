@@ -20,6 +20,7 @@ class CreateWorkersTable extends Migration
             $table->char('phone', 20)->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->foreignId('company_id')
+                  ->nullable()
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');

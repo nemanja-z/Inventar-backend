@@ -22,13 +22,14 @@ class OrderController extends Controller
             return response()->json(['status'=>'failed', 'message'=>'validation_error', 'errors'=>$validator->errors()]);
         }
         
-        $customer = Customer::create([
+        $order = Order::create([
             'address'=> $request['address'],
             'email'=> $request['email'],
             'phone'=> $request['phone'],
             'discount'=> $request['discount']
             ]);
-
+        $order = Company::where('company_name', $request['company_name'])->firstOrFail();
+        $company->order()->save($order);
         if(!is_null($customer))
         {
             return response()->json(['status'=>$this->status_code, 'succes'=>true, 'message'=>'Customer account is created!', 'data'=>$customer]);
