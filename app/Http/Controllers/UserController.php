@@ -33,7 +33,7 @@ class UserController extends Controller
         if($request->hasFile('profile'))
         {
             $destinationPath = 'public/images/profile/';
-            $profile_name = time().'profile';
+            $profile_name = time().'.'.$request->profile->extension();
             $request->profile->move($destinationPath, $profile_name);
             $path = $destinationPath . '/' . $profile_name;
         }

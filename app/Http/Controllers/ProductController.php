@@ -30,7 +30,7 @@ class ProductController extends Controller
         if($request->hasFile('picture'))
         {
             $destinationPath = 'public/images/picture/';
-            $picture_name = time().'picture';
+            $picture_name = time().'.'.$request->picture->extension();
             $request->picture->move($destinationPath, $picture_name);
             $path = $destinationPath.'/'.$picture_name;
         }
