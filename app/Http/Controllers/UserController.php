@@ -49,7 +49,7 @@ class UserController extends Controller
             'phone' => $request['phone'],
             'profile' => $path??null
         ]);
-        $user->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification($user->id);
 
         if(!(is_null($user))) {
             return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);

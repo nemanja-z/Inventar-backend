@@ -45,7 +45,6 @@ class MailResetPasswordToken extends Notification
      */
     public function toMail($notifiable)
     {
-        //$url = url('/reset-password', $this->token);
         $url = $this->pageUrl.$this->token;
         return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification'))

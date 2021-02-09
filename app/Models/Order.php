@@ -9,8 +9,10 @@ class Order extends Model
 {
     protected $guarded = [];
 
-    
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
+    public function product(){
+        return $this->belongsTo(Product::class);
     }
 }

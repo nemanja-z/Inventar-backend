@@ -18,9 +18,6 @@ class Company extends Model
     public function customer(){
         return $this->hasMany(Customer::class);
     }
-    public function warehouse(){
-        return $this->hasMany(Warehouse::class);
-    }
     public function worker(){
         return $this->hasMany(Worker::class);
     }

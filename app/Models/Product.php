@@ -12,4 +12,7 @@ class Product extends Model
     public function storage(){
         return $this->hasMany(Warehouse::class);
     }
+    public function order(){
+        return $this->hasMany(Order::class);
+    }
 }

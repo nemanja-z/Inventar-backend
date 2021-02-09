@@ -27,6 +27,11 @@ class CreateOrdersTable extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->foreignId('product_id')
+                  ->nullable()
+                  ->constrained()
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
             $table->foreignId('company_id')
                   ->nullable()
                   ->constrained()
