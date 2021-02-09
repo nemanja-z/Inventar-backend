@@ -37,6 +37,6 @@ Route::post('/product', [ProductController::class, 'store']);
 Route::post('/customer', [CustomerController::class, 'store']);
 Route::post('/warehouse', [WarehouseController::class, 'store']);
 Route::post('/worker', [WorkerController::class, 'store']);
-Route::get('/company', [CompanyController::class, 'view']);
+Route::get('/company/{id}', [CompanyController::class, 'view']);
 Route::post('/company', [CompanyController::class, 'store']);
 

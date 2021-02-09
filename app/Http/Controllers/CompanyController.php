@@ -50,9 +50,8 @@ class CompanyController extends Controller
         
     }
 
-    public function view(Request $request)
+    public function view(Request $request, $id)
     {
-        $id = Auth::id();
         return Company::with(['user', 'product', 'worker', 'warehouse', 'customer'])->where('user_id', $id)->firstOrFail();
     }
 }
